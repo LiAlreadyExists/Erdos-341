@@ -36,12 +36,6 @@ all of the following:
 
 ## Verify
 
-From this directory, run:
-
-```sh
-source "$HOME/.elan/env"
-lake build
-```
 
 The final axiom audit should report:
 
