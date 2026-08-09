@@ -55,9 +55,3 @@ The final axiom audit should report:
 These are standard Lean/Mathlib logical axioms. The proof contains no
 `sorry`, `admit`, custom axiom, or `native_decide` invocation. Finite
 certificates use kernel `decide`.
-
-The included `.lake/packages` link reuses the already installed Mathlib cache
-from `Desktop/Lean_project`, so this copy is immediately buildable on this
-workstation without duplicating several gigabytes. If the folder is moved to
-another machine, remove that link; the first `lake build` will fetch the exact
-revisions recorded in `lake-manifest.json`.
