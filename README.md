@@ -1,8 +1,6 @@
 # Lean verification of Erdős Problem 341
 
-(With the help of GPT-5.6 Sol) This is a standalone Lean 4 project containing the complete formal
-verification of the fixed aperiodic greedy extension constructed in
-`../output/pdf/erdos_problem_341_solution.tex`.
+(With the help of GPT-5.6 Sol)
 
 The main kernel-checked theorem is:
 
