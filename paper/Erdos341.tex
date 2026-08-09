@@ -1,0 +1,582 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[a4paper,margin=30mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[hidelinks]{hyperref}
+
+\allowdisplaybreaks[4]
+\emergencystretch=2em
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Nzero}{\mathbb{N}_0}
+\newcommand{\Zfortynine}{\mathbb{Z}/49\mathbb{Z}}
+\newcommand{\cpl}[1]{#1^{\mathsf{c}}}
+\newcommand{\ints}[2]{[#1,#2]_{\mathbb{Z}}}
+
+\title{A Fixed Aperiodic Greedy Pair-Sum-Avoiding Sequence}
+\author{Zhiheng Li}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+With the help of GPT-5.6 Sol, we construct an explicit finite set of positive integers whose greedy
+pair-sum-avoiding extension has a non-eventually periodic sequence of
+consecutive gaps.  The construction consists of a nonperiodic scale-eight
+sumset controller embedded in three residue classes modulo \(49\), together
+with a finite modular shield.  For the fixed \(21\)-element seed
+\[
+\begin{split}
+A=\{&1,2,3,5,7,13,22,27,28,32,36,40,47,48,52,\\
+    &63,71,77,81,89,97\},
+\end{split}
+\]
+we give an explicit infinite set \(S\), prove
+\(t\in S\Longleftrightarrow t\notin S+S\) for every \(t>97\), and prove
+that the membership indicator of \(S\) is not ultimately periodic.  The
+exact recurrence verifies the least-admissible-next-term rule, with equal
+summands allowed, and implies that the gap sequence of the greedy extension
+is not eventually periodic.
+\end{abstract}
+
+\section{The greedy extension and the main theorem}
+
+Write \(\N=\{1,2,3,\ldots\}\) and
+\(\Nzero=\{0,1,2,\ldots\}\).  For subsets \(X,Y\subseteq\Nzero\) and
+\(c\in\Nzero\), put
+\[
+X+Y=\{x+y:x\in X,\ y\in Y\},
+\qquad
+c+X=\{c+x:x\in X\},
+\qquad
+\cpl X=\Nzero\setminus X.
+\]
+Equal summands are allowed in every sumset.
+
+Let \(A=\{a_1<\cdots<a_k\}\subseteq\N\) be a nonempty finite set.  Install
+all elements of \(A\) as the initial terms.  Having chosen
+\(a_1<\cdots<a_n\), with \(n\geq k\), define
+\begin{equation}\label{eq:greedy-definition}
+a_{n+1}
+=\min\{t>a_n:t\notin A_n+A_n\},
+\qquad
+A_n=\{a_1,\ldots,a_n\}.
+\end{equation}
+The minimum exists because \(A_n+A_n\) is finite.  No admissibility condition
+is imposed on the initial set \(A\).  Let
+\(d_m=a_{m+1}-a_m\) denote the consecutive gaps.
+
+\begin{theorem}\label{thm:main}
+Let
+\[
+\begin{split}
+A=\{&1,2,3,5,7,13,22,27,28,32,36,40,47,48,52,\\
+    &63,71,77,81,89,97\}.
+\end{split}
+\]
+For the sequence generated from \(A\) by~\eqref{eq:greedy-definition},
+\[
+\forall M\geq1\ \forall p\geq1\ \exists m\geq M
+\quad d_{m+p}\neq d_m.
+\]
+Thus its consecutive gap sequence is not eventually periodic.
+\end{theorem}
+
+The following elementary lemma will identify an explicitly constructed set
+with the output of the least-next rule.
+
+\begin{lemma}[Exact recurrence implies the greedy rule]\label{lem:greedy}
+Let \(S\subseteq\N\) be infinite, let \(N\in S\), and put
+\(A=S\cap\ints1N\).  Suppose that
+\begin{equation}\label{eq:exact-recurrence}
+t\in S
+\quad\Longleftrightarrow\quad
+t\notin S+S
+\qquad (t>N).
+\end{equation}
+Then the increasing enumeration of \(S\) is exactly the greedy extension of
+\(A\).
+\end{lemma}
+
+\begin{proof}
+Regard the least-next rule as scanning the integers \(N+1,N+2,\ldots\) in
+increasing order and selecting precisely the admissible ones.  Before the
+first decision, the selected set is \(A=S\cap\ints1N\).  We prove by
+induction on \(t>N\) that, after the decision at \(t\), the selected set up to
+\(t\) is \(S\cap\ints1t\).  Before the decision at \(t\), the induction
+hypothesis gives the selected set \(S\cap\ints1{t-1}\).  If \(t=u+v\) with
+\(u,v\in S\), then \(u,v\geq1\), and hence \(u,v<t\).  Consequently
+\[
+t\in(S\cap\ints1{t-1})+(S\cap\ints1{t-1})
+\quad\Longleftrightarrow\quad
+t\in S+S.
+\]
+Thus \(t\) is admissible exactly when \(t\notin S+S\), which
+by~\eqref{eq:exact-recurrence} is exactly when \(t\in S\).  This proves the
+induction.  Equivalently, if \(s_m<s_{m+1}\) are consecutive elements of
+\(S\) with \(s_m\geq N\), then
+\[
+s_{m+1}\notin S_m+S_m,
+\qquad
+s_m<t<s_{m+1}\Longrightarrow t\in S_m+S_m,
+\]
+where \(S_m=\{s_1,\ldots,s_m\}\).  Hence \(s_{m+1}\) is the least admissible
+integer larger than \(s_m\), as required.
+\end{proof}
+
+\section{A scale-eight sumset controller}
+
+For integers \(a\leq b\), write
+\(\ints ab=\{a,a+1,\ldots,b\}\).  We shall repeatedly use the elementary
+identity
+\begin{equation}\label{eq:interval-sum}
+\ints ab+\ints cd=\ints{a+c}{b+d}
+\qquad (a\leq b,\ c\leq d).
+\end{equation}
+Indeed, only the reverse inclusion requires comment.  If
+\(a+c\leq z\leq b+d\), set \(x=\max\{a,z-d\}\) and \(y=z-x\).  Then
+\(a\leq x\leq b\), \(c\leq y\leq d\), and \(z=x+y\).
+
+Define
+\begin{equation}\label{eq:L}
+L=\bigcup_{k\geq0}\ints{8^k}{4\cdot8^k-1}
+\subseteq\Nzero
+\end{equation}
+and
+\begin{align}
+Y_0&=\{0\}\cup
+      \bigcup_{k\geq0}\ints{4\cdot8^k}{8\cdot8^k-1},
+      \label{eq:Y0}\\
+Y_1&=\ints13\cup
+      \bigcup_{k\geq0}\ints{16\cdot8^k-1}{32\cdot8^k-1},
+      \label{eq:Y1}\\
+Y_2&=\ints01\cup\ints7{15}\cup
+      \bigcup_{k\geq0}\ints{64\cdot8^k-1}{128\cdot8^k-1}.
+      \label{eq:Y2}
+\end{align}
+For every \(k\geq0\), the interval
+\(\ints{8^k}{8^{k+1}-1}\) is the disjoint union
+\[
+\ints{8^k}{4\cdot8^k-1}
+\mathbin{\dot\cup}
+\ints{4\cdot8^k}{8\cdot8^k-1}.
+\]
+These intervals partition \(\N\).  Together with \(0\in Y_0\), this gives
+\begin{equation}\label{eq:Y0-complement-L}
+Y_0=\cpl L.
+\end{equation}
+
+\begin{lemma}[Controller identities]\label{lem:controller}
+The sets in~\eqref{eq:Y0}--\eqref{eq:Y2} satisfy
+\begin{align}
+Y_1&=\cpl{(Y_0+Y_0)},                                      \label{eq:gate01}\\
+Y_2&=\cpl{(Y_1+Y_1)},                                      \label{eq:gate12}\\
+Y_0&=\{0\}\cup\bigl(1+\cpl{(Y_2+Y_2)}\bigr).             \label{eq:gate20}
+\end{align}
+\end{lemma}
+
+\begin{proof}
+We first compute the three self-sumsets.  Put
+\(I_k=\ints{4\cdot8^k}{8\cdot8^k-1}\).  For \(a=8^k\),
+\[
+0+I_k=\ints{4a}{8a-1},
+\qquad
+I_k+I_k=\ints{8a}{16a-2},
+\]
+so these adjacent intervals fill \(\ints{4a}{16a-2}\).  If
+\(i\leq k\), then \(8^i\leq a\), and~\eqref{eq:interval-sum} gives
+\[
+I_i+I_k
+=\ints{4(8^i+a)}{8(8^i+a)-2}
+\subseteq\ints{4a}{16a-2}.
+\]
+Every sum of two nonzero elements of \(Y_0\) is of this form after
+interchanging the summands.  Therefore
+\begin{equation}\label{eq:Y0-square}
+Y_0+Y_0
+=\{0\}\cup\bigcup_{k\geq0}
+  \ints{4\cdot8^k}{16\cdot8^k-2}.
+\end{equation}
+
+Next put \(C=\ints13\) and
+\(J_k=\ints{16\cdot8^k-1}{32\cdot8^k-1}\).  For \(a=8^k\),
+\begin{align*}
+C+C&=\ints26,\\
+C+J_k&=\ints{16a}{32a+2},\\
+J_k+J_k&=\ints{32a-2}{64a-2}.
+\end{align*}
+The latter two intervals overlap and fill \(\ints{16a}{64a-2}\).
+If \(i\leq k\), then
+\[
+J_i+J_k
+=\ints{16(8^i+a)-2}{32(8^i+a)-2}
+\subseteq\ints{16a}{64a-2},
+\]
+because \(8^i\leq a\) and \(8^i\geq1\).  Hence
+\begin{equation}\label{eq:Y1-square}
+Y_1+Y_1
+=\ints26\cup\bigcup_{k\geq0}
+  \ints{16\cdot8^k}{64\cdot8^k-2}.
+\end{equation}
+
+Finally let \(H=\ints01\cup\ints7{15}\) and
+\(K_k=\ints{64\cdot8^k-1}{128\cdot8^k-1}\).  Directly
+from~\eqref{eq:interval-sum},
+\begin{align*}
+H+H&=\ints02\cup\ints7{30},\\
+(\ints01)+K_k&=\ints{64a-1}{128a},\\
+(\ints7{15})+K_k&=\ints{64a+6}{128a+14},\\
+K_k+K_k&=\ints{128a-2}{256a-2},
+\end{align*}
+where again \(a=8^k\).  Since \(64a+6\leq128a\), the two middle
+intervals overlap, and hence
+\[
+H+K_k=\ints{64a-1}{128a+14}.
+\]
+This interval overlaps \(K_k+K_k\), and together they fill
+\(\ints{64a-1}{256a-2}\).  For \(i\leq k\), one also has
+\[
+K_i+K_k
+=\ints{64(8^i+a)-2}{128(8^i+a)-2}
+\subseteq\ints{64a-1}{256a-2}.
+\]
+It follows that
+\begin{equation}\label{eq:Y2-square}
+Y_2+Y_2
+=\ints02\cup\ints7{30}\cup\bigcup_{k\geq0}
+  \ints{64\cdot8^k-1}{256\cdot8^k-2}.
+\end{equation}
+
+The complementary gaps between the long intervals
+in~\eqref{eq:Y0-square} are
+\[
+\ints13,
+\qquad
+\ints{16\cdot8^k-1}{32\cdot8^k-1}\qquad(k\geq0),
+\]
+which proves~\eqref{eq:gate01}.  The complementary gaps
+in~\eqref{eq:Y1-square} are
+\[
+\ints01,
+\qquad
+\ints7{15},
+\qquad
+\ints{64\cdot8^k-1}{128\cdot8^k-1}\qquad(k\geq0),
+\]
+which proves~\eqref{eq:gate12}.
+
+To prove the feedback identity, subtract \(1\) from the blocks of \(L\).
+The blocks of \(L-1=\{\ell-1:\ell\in L\}\) corresponding to \(k=0\) and
+\(k=1\) are \(\ints02\) and \(\ints7{30}\), respectively.  For \(k=j+2\),
+the corresponding block is
+\[
+\ints{8^{j+2}-1}{4\cdot8^{j+2}-2}
+=\ints{64\cdot8^j-1}{256\cdot8^j-2}.
+\]
+Thus~\eqref{eq:Y2-square} is exactly
+\begin{equation}\label{eq:Y2-square-L}
+Y_2+Y_2=L-1.
+\end{equation}
+For \(q\geq1\), equations~\eqref{eq:Y0-complement-L}
+and~\eqref{eq:Y2-square-L} give
+\[
+q\in Y_0
+\iff q\notin L
+\iff q-1\notin L-1
+\iff q-1\in\cpl{(Y_2+Y_2)}.
+\]
+Together with \(0\in Y_0\), this is~\eqref{eq:gate20}.
+\end{proof}
+
+\begin{lemma}\label{lem:Y0-aperiodic}
+The membership indicator of \(Y_0\) is not ultimately periodic.
+\end{lemma}
+
+\begin{proof}
+Suppose that there are \(N\geq0\) and \(h\geq1\) such that
+\[
+n\in Y_0\iff n+h\in Y_0
+\qquad(n\geq N).
+\]
+Choose \(a=8^k>\max\{N,h\}\) and set \(m=4a-h\).  Then
+\[
+a\leq m\leq4a-1,
+\qquad
+m\geq N.
+\]
+Hence \(m\in L\), so \(m\notin Y_0\), whereas
+\(m+h=4a\in\ints{4a}{8a-1}\subseteq Y_0\).  This contradicts the assumed
+periodicity.
+\end{proof}
+
+\section{A finite shield modulo 49}
+
+All sums in this section are taken in \(\Zfortynine\), with residues written
+as their representatives in \(\{0,1,\ldots,48\}\).  Put
+\begin{equation}\label{eq:PBD}
+P=\{7,14,28\},
+\qquad
+B=\{3,22,32,40,48\},
+\qquad
+D=\{1,2,5,13,27,36,47\},
+\end{equation}
+and let \(Q=B\cup P\).
+
+\begin{lemma}[Finite shield certificate]\label{lem:shield}
+In \(\Zfortynine\),
+\begin{align}
+(B+B)\cup(P+B)\cup(D+B)&=\Zfortynine\setminus Q,
+                                                        \label{eq:cover-mod}\\
+Q\cap\bigl((B+B)\cup(P+B)\cup(D+B)\cup(D+P)\bigr)
+&=\varnothing,                                         \label{eq:avoid-mod}\\
+(P+P)\cap Q&=P.                                        \label{eq:PP-mod}
+\end{align}
+Moreover, the only ordered pairs from \(P\times P\) whose sum lies in \(Q\)
+are the three diagonal pairs
+\begin{equation}\label{eq:diagonal-pairs}
+7+7=14,
+\qquad
+14+14=28,
+\qquad
+28+28=49+7.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The required finite calculation is displayed in full:
+\begin{align*}
+B+B={}&\{2,5,6,13,15,21,23,25,31,35,39,43,44,47\},\\
+P+B={}&\{1,5,6,10,11,13,17,19,27,29,31,36,39,46,47\},\\
+D+B={}&\{0,1,4,5,8,9,10,12,16,18,19,20,23,24,26,27,\\
+      &\hspace{2.5em}30,33,34,35,37,38,39,41,42,45,46\},\\
+D+P={}&\{1,5,6,8,9,12,15,16,19,20,26,27,29,30,33,34,41,43\},\\
+P+P={}&\{7,14,21,28,35,42\}.
+\end{align*}
+The union of the first three lines is
+\[
+\Zfortynine\setminus Q
+=\Zfortynine\setminus\{3,7,14,22,28,32,40,48\}.
+\]
+None of the first four lines meets \(Q\).  The last line
+proves~\eqref{eq:PP-mod}, and direct inspection of the nine ordered pairs in
+\(P\times P\) gives~\eqref{eq:diagonal-pairs}.
+\end{proof}
+
+We now define the infinite set
+\begin{equation}\label{eq:S}
+\begin{split}
+S={}&D
+\cup\{49q+b:q\in\Nzero,\ b\in B\}\\
+&\cup\{49q+7:q\in Y_0\}\\
+&\cup\{49q+14:q\in Y_1\}\\
+&\cup\{49q+28:q\in Y_2\}.
+\end{split}
+\end{equation}
+Every integer in~\eqref{eq:S} is positive.  Below \(98\), the five full
+\(B\)-rails contribute
+\[
+\{3,22,32,40,48,52,71,81,89,97\}.
+\]
+Since
+\[
+Y_0\cap\{0,1\}=\{0\},
+\quad
+Y_1\cap\{0,1\}=\{1\},
+\quad
+Y_2\cap\{0,1\}=\{0,1\},
+\]
+the three controller rails contribute \(\{7,28,63,77\}\).  Together with
+the seven elements of \(D\), this gives
+\begin{equation}\label{eq:seed-prefix}
+\begin{split}
+S\cap\ints1{97}
+=\{&1,2,3,5,7,13,22,27,28,32,36,40,47,48,52,\\
+    &63,71,77,81,89,97\}.
+\end{split}
+\end{equation}
+
+\section{The exact greedy recurrence}
+
+\begin{theorem}\label{thm:recurrence}
+For every \(t>97\),
+\begin{equation}\label{eq:main-recurrence}
+t\in S
+\quad\Longleftrightarrow\quad
+t\notin S+S.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Write \(t=49q+r\), with \(0\leq r<49\).  Since \(t>97\),
+\begin{equation}\label{eq:q-ge-two}
+q\geq2.
+\end{equation}
+
+We first treat residues in \(Q=B\cup P\).  For \(t>97\), membership
+\(t\in S\) can only come from one of the infinite rails
+in~\eqref{eq:S}, and hence requires \(r\in Q\).  The six possible types of
+pair sums are
+\[
+D+D,\quad D+B,\quad D+P,\quad B+B,\quad B+P,\quad P+P.
+\]
+A \(D+D\) sum is at most \(94<t\).  By~\eqref{eq:avoid-mod}, none of the next
+four types can have residue in \(Q\).  By Lemma~\ref{lem:shield}, a \(P+P\)
+sum can return to \(Q\) only through one of the three diagonal pairs
+in~\eqref{eq:diagonal-pairs}.
+
+It follows that, for the present \(q\geq2\), representation on the controller
+rails is governed exactly as follows:
+\begin{align*}
+49q+14\in S+S
+&\iff q\in Y_0+Y_0,\\
+49q+28\in S+S
+&\iff q\in Y_1+Y_1,\\
+49q+7\in S+S
+&\iff q\geq1\ \text{and}\ q-1\in Y_2+Y_2.
+\end{align*}
+Indeed, the corresponding representations are
+\begin{align*}
+(49u+7)+(49v+7)&=49(u+v)+14,\\
+(49u+14)+(49v+14)&=49(u+v)+28,\\
+(49u+28)+(49v+28)&=49(u+v+1)+7.
+\end{align*}
+The converse in each line follows from the exclusion of every other source
+type.  Equations~\eqref{eq:gate01},~\eqref{eq:gate12},
+and~\eqref{eq:gate20} now show that a controller-rail integer is
+represented if
+and only if it is omitted from \(S\).  No integer \(t>97\) on a full
+\(B\)-rail is represented, by the preceding exhaustive six-type analysis.
+Thus~\eqref{eq:main-recurrence} holds for every residue in \(Q\).
+In particular,
+if an omitted controller integer is considered explicitly, the relevant
+complement identity supplies \(u,v\) in the source controller set, and the
+three displayed equations give a representation by elements of \(S\).
+
+It remains to treat \(r\notin Q\).  Such an integer is not in \(S\):
+its residue excludes every infinite rail, and \(t>97\) excludes the finite
+set \(D\).  Equation~\eqref{eq:cover-mod} supplies a residue representation
+of one of the three
+types \(B+B\), \(D+B\), or \(P+B\).
+
+Suppose first that \(r=b+b'\) in \(\Zfortynine\), with \(b,b'\in B\).  For
+the standard representatives, write
+\(b+b'=49c+r\), where \(c\in\{0,1\}\).  Then
+\[
+t=b+\bigl(49(q-c)+b'\bigr).
+\]
+Both summands lie on full \(B\)-rails.  The second is positive, since
+\(q\geq2\) and \(c\leq1\).  If instead \(r=d+b\) in
+\(\Zfortynine\), with \(d\in D\) and \(b\in B\), write
+\(d+b=49c+r\), where \(c\in\{0,1\}\).  Then
+\[
+t=d+\bigl(49(q-c)+b\bigr),
+\]
+using the fixed selected element \(d\) and a full-rail element.
+
+Finally suppose that \(r=p+b\) in \(\Zfortynine\), with \(p\in P\) and
+\(b\in B\).  The integers
+\[
+e_7=7,
+\qquad
+e_{14}=63=49+14,
+\qquad
+e_{28}=28
+\]
+belong to \(S\), because \(0\in Y_0\), \(1\in Y_1\), and \(0\in Y_2\).
+Write \(e_p=49u_p+p\) and \(p+b=49c+r\).  Here
+\(u_p,c\in\{0,1\}\), and
+\[
+t=e_p+\bigl(49(q-u_p-c)+b\bigr).
+\]
+By~\eqref{eq:q-ge-two}, the second quotient is nonnegative, so the second
+summand is a positive element of a full \(B\)-rail.  This represents every
+integer whose residue lies outside \(Q\).
+
+All constructed summands are positive; since their sum is \(t\), each is
+strictly smaller than \(t\).  We have therefore proved both directions
+of~\eqref{eq:main-recurrence} for every \(t>97\).
+\end{proof}
+
+By~\eqref{eq:seed-prefix}, Theorem~\ref{thm:recurrence}, and
+Lemma~\ref{lem:greedy}, the increasing enumeration of \(S\) is exactly the
+greedy extension of the seed in Theorem~\ref{thm:main}.  All \(21\) seed
+elements are installed before the first greedy test, which occurs after
+\(97\).  No condition is imposed retroactively; for example, the seed is not
+sum-free because \(1+1=2\).
+
+\section{Nonperiodicity of the gaps}
+
+\begin{lemma}\label{lem:gaps-imply-membership}
+Let \(T=\{t_1<t_2<\cdots\}\subseteq\N\) be infinite.  If the consecutive
+gaps \(t_{m+1}-t_m\) are eventually periodic, then the membership indicator
+of \(T\) is ultimately periodic.
+\end{lemma}
+
+\begin{proof}
+Suppose that the gaps have period \(p\geq1\) from index \(M\) onward.  Let
+\[
+h=\sum_{j=0}^{p-1}(t_{M+j+1}-t_{M+j})>0.
+\]
+Every block of \(p\) consecutive gaps in the periodic tail has the same sum,
+so
+\begin{equation}\label{eq:term-translation}
+t_{m+p}=t_m+h
+\qquad(m\geq M).
+\end{equation}
+The infinite set \(T\subseteq\N\) is unbounded.  Hence, given an integer
+\(n\geq t_M\), there is a unique \(m\geq M\) such that
+\(t_m\leq n<t_{m+1}\).  By~\eqref{eq:term-translation},
+\[
+t_{m+p}\leq n+h<t_{m+p+1},
+\qquad
+(n+h)-t_{m+p}=n-t_m.
+\]
+Thus \(n=t_m\) if and only if \(n+h=t_{m+p}\).  Equivalently,
+\[
+n\in T\iff n+h\in T
+\qquad(n\geq t_M),
+\]
+which is ultimate periodicity of the membership indicator.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+The residue-\(7\) rail of \(S\) satisfies the exact identity
+\begin{equation}\label{eq:rail-seven}
+49q+7\in S
+\quad\Longleftrightarrow\quad
+q\in Y_0
+\qquad(q\in\Nzero).
+\end{equation}
+Suppose, for contradiction, that membership in \(S\) were ultimately
+periodic with some period \(h\geq1\).  Every positive multiple of an ultimate
+period is again an ultimate period, so \(49h\) is an ultimate period of \(S\).
+For every sufficiently large \(q\), equations~\eqref{eq:rail-seven} and the
+\(49h\)-periodicity of \(S\) would therefore give
+\[
+q\in Y_0
+\iff 49q+7\in S
+\iff 49(q+h)+7\in S
+\iff q+h\in Y_0.
+\]
+This contradicts Lemma~\ref{lem:Y0-aperiodic}.  Hence the membership
+indicator of \(S\) is not ultimately periodic.  By the contrapositive of
+Lemma~\ref{lem:gaps-imply-membership}, the consecutive gaps in the increasing
+enumeration of \(S\) are not eventually periodic.  This proves the asserted
+quantified statement for every \(M,p\geq1\).
+\end{proof}
+
+\end{document}
