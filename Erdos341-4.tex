@@ -1,0 +1,319 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[hidelinks]{hyperref}
+
+\emergencystretch=2em
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Nzero}{\mathbb{N}_0}
+\newcommand{\Zfortynine}{\mathbb{Z}/49\mathbb{Z}}
+\newcommand{\cpl}[1]{#1^{\mathsf{c}}}
+\newcommand{\ints}[2]{[#1,#2]_{\mathbb{Z}}}
+
+\title{A Fixed Aperiodic Greedy Pair-Sum-Avoiding Sequence}
+\author{Zhiheng Li}
+\date{}
+
+\hypersetup{
+  pdftitle={A Fixed Aperiodic Greedy Pair-Sum-Avoiding Sequence},
+  pdfauthor={Zhiheng Li}
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We exhibit the fixed \(21\)-element seed
+\[
+A=\{1,2,3,5,7,13,22,27,28,32,36,40,47,48,52,63,71,77,81,89,97\},
+\]
+whose greedy pair-sum-avoiding extension has a consecutive-gap sequence that is not eventually periodic. The proof constructs an explicit infinite set \(S\) satisfying the exact greedy recurrence \(t\in S\Longleftrightarrow t\notin S+S\) for \(t>97\), using a scale-eight sumset controller embedded in three residue classes modulo \(49\) and a finite modular shield.
+\end{abstract}
+
+\section{Introduction and the main theorem}
+
+\noindent\textit{AI-use disclosure.} This proof was developed with assistance from OpenAI's GPT-5.6 Sol. All arguments were checked and verified by the author.
+
+\noindent\textit{Formal verification.} Theorem~\ref{thm:main} has been formally verified in Lean~4. The formalization is available at \href{https://doi.org/10.5281/zenodo.21902147}{https://doi.org/10.5281/zenodo.21902147}.
+
+The question appears in Erd\H{o}s and Graham~\cite[p.~53]{ErdosGraham1980} and is catalogued as Erd\H{o}s Problem~341 in Bloom's online database~\cite{Bloom341}. Related periodicity criteria are due to Calkin and Finch~\cite{CalkinFinch1996}, while Calkin and Erd\H{o}s~\cite{CalkinErdos1996} proved that a natural class of aperiodic sum-free sets is incomplete. We answer the arbitrary finite-seed question negatively.
+
+Write \(\N=\{1,2,3,\ldots\}\) and \(\Nzero=\{0,1,2,\ldots\}\). For \(X,Y\subseteq\Nzero\) and \(c\in\Nzero\), put
+\[
+X+Y=\{x+y\mid x\in X,\ y\in Y\},
+\qquad
+c+X=\{c+x\mid x\in X\},
+\qquad
+\cpl{X}=\Nzero\setminus X.
+\]
+Equal summands are allowed in every sumset.
+
+Let \(A=\{a_1<\cdots<a_k\}\subseteq\N\) be a nonempty finite set. Install all elements of \(A\) as the initial terms. For \(n\geq k\), define
+\begin{equation}\label{eq:greedy-definition}
+a_{n+1}
+=\min\{t\in\N\mid t>a_n,\ t\notin A_n+A_n\},
+\qquad
+A_n=\{a_1,\ldots,a_n\}.
+\end{equation}
+Let \(d_m=a_{m+1}-a_m\) denote the consecutive gaps.
+
+\begin{theorem}\label{thm:main}
+Let
+\[
+A=\{1,2,3,5,7,13,22,27,28,32,36,40,47,48,52,63,71,77,81,89,97\},
+\]
+For the sequence generated from \(A\) by~\eqref{eq:greedy-definition},
+\[
+\forall M\geq1\ \forall p\geq1\ \exists m\geq M
+\quad d_{m+p}\neq d_m.
+\]
+Thus its consecutive gap sequence is not eventually periodic.
+\end{theorem}
+
+\begin{lemma}[Exact recurrence implies the greedy rule]\label{lem:greedy}
+Let \(S\subseteq\N\) be infinite, let \(N\in S\), and put \(A=S\cap\ints{1}{N}\). Suppose that
+\begin{equation}\label{eq:exact-recurrence}
+t\in S
+\quad\Longleftrightarrow\quad
+t\notin S+S
+\qquad (t>N).
+\end{equation}
+Then the increasing enumeration of \(S\) is exactly the greedy extension of \(A\).
+\end{lemma}
+
+\begin{proof}
+Scan the integers \(t>N\) in order. Inductively, immediately before testing \(t\), the selected set is \(S\cap\ints{1}{t-1}\). Since all elements of \(S\) are positive, every representation \(t=u+v\) with \(u,v\in S\) has \(u,v<t\), and hence
+\[
+t\in(S\cap\ints{1}{t-1})+(S\cap\ints{1}{t-1})
+\quad\Longleftrightarrow\quad t\in S+S.
+\]
+Thus~\eqref{eq:exact-recurrence} makes the rule select exactly the elements of \(S\), completing the induction.
+\end{proof}
+
+\section{A scale-eight sumset controller}
+
+For integers \(a\leq b\), write \(\ints{a}{b}=\{a,a+1,\ldots,b\}\). We use the standard identity
+\begin{equation}\label{eq:interval-sum}
+\ints{a}{b}+\ints{c}{d}=\ints{a+c}{b+d}
+\qquad (a\leq b,\ c\leq d).
+\end{equation}
+
+Define
+\begin{align}
+L&=\bigcup_{k\geq0}\ints{8^k}{4\cdot8^k-1} \\
+Y_0&=\{0\}\cup
+      \bigcup_{k\geq0}\ints{4\cdot8^k}{8\cdot8^k-1},
+      \label{eq:Y0}\\
+Y_1&=\ints{1}{3}\cup
+      \bigcup_{k\geq0}\ints{16\cdot8^k-1}{32\cdot8^k-1},
+      \label{eq:Y1}\\
+Y_2&=\ints{0}{1}\cup\ints{7}{15}\cup
+      \bigcup_{k\geq0}\ints{64\cdot8^k-1}{128\cdot8^k-1}.
+      \label{eq:Y2}
+\end{align}
+At each scale, the corresponding blocks of \(L\) and \(Y_0\setminus\{0\}\) partition \(\ints{8^k}{8^{k+1}-1}\). Thus
+\begin{equation}\label{eq:Y0-complement-L}
+Y_0=\cpl{L}.
+\end{equation}
+
+\begin{lemma}[Controller identities]\label{lem:controller}
+The sets in~\eqref{eq:Y0}--\eqref{eq:Y2} satisfy
+\begin{align}
+Y_1&=\cpl{(Y_0+Y_0)},                                      \label{eq:gate01}\\
+Y_2&=\cpl{(Y_1+Y_1)},                                      \label{eq:gate12}\\
+Y_0&=\{0\}\cup\bigl(1+\cpl{(Y_2+Y_2)}\bigr).             \label{eq:gate20}
+\end{align}
+\end{lemma}
+
+\begin{proof}
+A direct interval calculation gives
+\begin{align}
+Y_0+Y_0
+&=\{0\}\cup\bigcup_{k\geq0}
+  \ints{4\cdot8^k}{16\cdot8^k-2}=\cpl{Y_1},
+  \label{eq:Y0-square}\\
+Y_1+Y_1
+&=\ints{2}{6}\cup\bigcup_{k\geq0}
+  \ints{16\cdot8^k}{64\cdot8^k-2}=\cpl{Y_2},
+  \label{eq:Y1-square}\\
+Y_2+Y_2
+&=\ints{0}{2}\cup\ints{7}{30}\cup\bigcup_{k\geq0}
+  \ints{64\cdot8^k-1}{256\cdot8^k-2}=L-1.
+  \label{eq:Y2-square}
+\end{align}
+Equations~\eqref{eq:Y2-square} and~\eqref{eq:Y0-complement-L} yield~\eqref{eq:gate20}.
+\end{proof}
+
+\begin{lemma}\label{lem:Y0-aperiodic}
+The membership indicator of \(Y_0\) is not ultimately periodic.
+\end{lemma}
+
+\begin{proof}
+Suppose that there are \(N\geq0\) and \(h\geq1\) such that
+\[
+n\in Y_0\iff n+h\in Y_0
+\qquad(n\geq N).
+\]
+Choose \(a=8^k>\max\{N,h\}\) and put \(m=4a-h\). Then \(N<a\leq m\leq4a-1\). Hence \(m\in L\), so \(m\notin Y_0\), whereas \(m+h=4a\in\ints{4a}{8a-1}\subseteq Y_0\). This contradicts the assumed periodicity.
+\end{proof}
+
+\section{A finite shield modulo 49}
+
+All residues in this section lie in \(\Zfortynine\) and are represented in \(\{0,\ldots,48\}\). Put
+\begin{equation}\label{eq:PBD}
+P=\{7,14,28\},\qquad B=\{3,22,32,40,48\},\qquad
+D=\{1,2,5,13,27,36,47\},\qquad Q=P\cup B.
+\end{equation}
+
+\begin{lemma}[Finite shield]\label{lem:shield}
+In \(\Zfortynine\),
+\begin{align}
+(B+B)\cup(P+B)\cup(D+B)&=\Zfortynine\setminus Q, \label{eq:cover-mod}\\
+Q\cap\bigl((B+B)\cup(P+B)\cup(D+B)\cup(D+P)\bigr)
+&=\varnothing,                                         \label{eq:avoid-mod}\\
+(P+P)\cap Q&=P.                                        \label{eq:PP-mod}
+\end{align}
+Moreover, the only ordered pairs in \(P\times P\) whose sum lies in \(Q\) are
+\begin{equation}\label{eq:diagonal-pairs}
+7+7=14,
+\qquad
+14+14=28,
+\qquad
+28+28=49+7.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+All assertions follow by direct computation in \(\Zfortynine\).
+\end{proof}
+
+We now define the infinite set
+\begin{equation}\label{eq:S}
+\begin{split}
+S={}&D\cup\{49q+b\mid q\in\Nzero,\ b\in B\}\\
+&\cup\{49q+7\mid q\in Y_0\}
+ \cup\{49q+14\mid q\in Y_1\}
+ \cup\{49q+28\mid q\in Y_2\}.
+\end{split}
+\end{equation}
+Hence
+\begin{equation}\label{eq:seed-prefix}
+S\cap\ints{1}{97}=D\cup B\cup(49+B)\cup\{7,28,63,77\}=A.
+\end{equation}
+
+\begin{theorem}\label{thm:recurrence}
+For every \(t>97\),
+\begin{equation}\label{eq:main-recurrence}
+t\in S
+\quad\Longleftrightarrow\quad
+t\notin S+S.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Write \(t=49q+r\), with \(0\leq r<49\). Since \(t>97\), we have $q\geq2$.
+
+First let \(r\in Q=B\cup P\). The six possible pair-sum types are
+\[
+D+D,\quad D+B,\quad D+P,\quad B+B,\quad B+P,\quad P+P.
+\]
+A \(D+D\) sum is at most \(94<t\). Equation~\eqref{eq:avoid-mod} excludes the next four types from \(Q\), while~\eqref{eq:PP-mod} and~\eqref{eq:diagonal-pairs} leave only the three diagonal \(P+P\) pairs. Hence
+\begin{align*}
+49q+14\in S+S&\iff q\in Y_0+Y_0,\\
+49q+28\in S+S&\iff q\in Y_1+Y_1,\\
+49q+7\in S+S&\iff q-1\in Y_2+Y_2.
+\end{align*}
+Indeed, the corresponding representations are
+\begin{align*}
+(49u+7)+(49v+7)&=49(u+v)+14,\\
+(49u+14)+(49v+14)&=49(u+v)+28,\\
+(49u+28)+(49v+28)&=49(u+v+1)+7.
+\end{align*}
+The exclusion of every other source type proves the converse implication in each equivalence. The controller identities~\eqref{eq:gate01}--\eqref{eq:gate20} therefore make every \(P\)-rail integer represented exactly when it is absent from \(S\). Every \(B\)-rail integer belongs to \(S\), and the same exhaustive source analysis shows that none is represented. Thus~\eqref{eq:main-recurrence} holds for \(r\in Q\).
+
+Now let \(r\notin Q\). Such an integer \(t\) is not in \(S\): its residue excludes every infinite rail, and \(t>97\) excludes the finite set \(D\). By~\eqref{eq:cover-mod}, there exist \(b\in B\) and \(x\in B\cup D\cup P\) such that \(x+b\equiv r\pmod {49}\). Set
+\[
+e_x=x\quad(x\in B\cup D),
+\qquad e_7=7,\qquad e_{14}=63=49+14,\qquad e_{28}=28.
+\]
+Every \(e_x\) belongs to \(S\). Write
+\[
+e_x=49u_x+x,
+\qquad x+b=49c+r.
+\]
+Here \(u_x,c\in\{0,1\}\). Since \(q\geq2\), the quotient \(q-u_x-c\) is nonnegative, and
+\[
+t=e_x+\bigl(49(q-u_x-c)+b\bigr)\in S+S.
+\]
+The second summand is a positive element of a full \(B\)-rail. Both summands are positive and sum to \(t\), so each is smaller than \(t\). This completes the proof.
+\end{proof}
+
+By~\eqref{eq:seed-prefix}, Theorem~\ref{thm:recurrence}, and Lemma~\ref{lem:greedy}, the increasing enumeration of \(S\) is exactly the greedy extension of the seed $A$ in Theorem~\ref{thm:main}.
+
+\section{Nonperiodicity of the gaps}
+
+\begin{lemma}\label{lem:gaps-imply-membership}
+Let \(T=\{t_1<t_2<\cdots\}\subseteq\N\) be infinite. If the consecutive gaps \(t_{m+1}-t_m\) are eventually periodic, then the membership indicator of \(T\) is ultimately periodic.
+\end{lemma}
+
+\begin{proof}
+Suppose that the gaps have period \(p\geq1\) from index \(M\) onward. Let
+\[
+h=\sum_{j=0}^{p-1}(t_{M+j+1}-t_{M+j})>0.
+\]
+Every block of \(p\) consecutive gaps in the periodic tail has sum $h$, so \(t_{m+p}=t_m+h\) for \(m\geq M\). Since \(T\) is infinite, it is unbounded. Thus, given \(n\geq t_M\), there is a unique \(m\geq M\) such that \(t_m\leq n<t_{m+1}\), and
+\[
+t_{m+p}\leq n+h<t_{m+p+1},
+\qquad
+(n+h)-t_{m+p}=n-t_m.
+\]
+Thus \(n=t_m\) if and only if \(n+h=t_{m+p}\), which proves
+\[
+n\in T\iff n+h\in T
+\qquad(n\geq t_M),
+\]
+This is ultimate periodicity of the membership indicator.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+The residue-\(7\) rail of \(S\) satisfies
+\begin{equation}\label{eq:rail-seven}
+49q+7\in S\quad\Longleftrightarrow\quad q\in Y_0
+\qquad(q\in\Nzero).
+\end{equation}
+Suppose, for contradiction, that membership in \(S\) were ultimately periodic with period \(h\geq1\). Then \(49h\) would also be an ultimate period. For all sufficiently large \(q\), equation~\eqref{eq:rail-seven} would give
+\[
+q\in Y_0
+\iff49q+7\in S
+\iff49(q+h)+7\in S
+\iff q+h\in Y_0,
+\]
+contradicting Lemma~\ref{lem:Y0-aperiodic}. Thus the membership indicator of \(S\) is not ultimately periodic. The contrapositive of Lemma~\ref{lem:gaps-imply-membership} now shows that the consecutive gaps in the increasing enumeration of \(S\) are not eventually periodic, which is the assertion of the theorem.
+\end{proof}
+
+\begin{thebibliography}{9}
+
+\bibitem{ErdosGraham1980}
+P. Erd\H{o}s and R.~L. Graham, \emph{Old and New Problems and Results in Combinatorial Number Theory}, Monographies de L'Enseignement Math\'ematique, no.~28, Universit\'e de Gen\`eve, L'Enseignement Math\'ematique, Geneva, 1980.
+
+\bibitem{Bloom341}
+T.~F. Bloom, \emph{Erd\H{o}s Problem \#341}, Erd\H{o}s Problems, \href{https://www.erdosproblems.com/341}{\texttt{erdosproblems.com/341}}, accessed 11 August 2026.
+
+\bibitem{CalkinFinch1996}
+N.~J. Calkin and S.~R. Finch, \emph{Conditions on periodicity for sum-free sets}, Experiment.\ Math.\ \textbf{5} (1996), no.~2, 131--137; \href{https://doi.org/10.1080/10586458.1996.10504584}{doi:10.1080/10586458.1996.10504584}.
+
+\bibitem{CalkinErdos1996}
+N.~J. Calkin and P. Erd\H{o}s, \emph{On a class of aperiodic sum-free sets}, Math.\ Proc.\ Cambridge Philos.\ Soc.\ \textbf{120} (1996), no.~1, 1--5; \href{https://doi.org/10.1017/S0305004100074600}{doi:10.1017/S0305004100074600}.
+
+\end{thebibliography}
+
+\end{document}
