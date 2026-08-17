@@ -18,7 +18,7 @@
 \newcommand{\cpl}[1]{#1^{\mathsf{c}}}
 \newcommand{\ints}[2]{[#1,#2]_{\mathbb{Z}}}
 
-\title{A Fixed Aperiodic Greedy Pair-Sum-Avoiding Sequence}
+\title{A Counterexample to Erd\H{o}s Problem~341}
 \author{Zhiheng Li}
 \date{}
 
@@ -32,11 +32,11 @@
 \maketitle
 
 \begin{abstract}
-We exhibit the fixed \(21\)-element seed
+We give a negative answer to Erd\H{o}s problem~341 by exhibiting the following counterexample
 \[
-A=\{1,2,3,5,7,13,22,27,28,32,36,40,47,48,52,63,71,77,81,89,97\},
+A=\{1,2,3,5,7,13,22,27,28,32,36,40,47,48,52,63,71,77,81,89,97\}.
 \]
-whose greedy pair-sum-avoiding extension has a consecutive-gap sequence that is not eventually periodic. The proof constructs an explicit infinite set \(S\) satisfying the exact greedy recurrence \(t\in S\Longleftrightarrow t\notin S+S\) for \(t>97\), using a scale-eight sumset controller embedded in three residue classes modulo \(49\) and a finite modular shield.
+The proof constructs an infinite set \(S\) satisfying the exact greedy recurrence \(t\in S\Longleftrightarrow t\notin S+S\) for \(t>97\). We show that \(S\) is the extension of the \(21\)-element seed set \(A\), and use a scale-eight sumset controller embedded in three residue classes modulo \(49\) and a finite modular shield to prove that the consecutive gap sequence of \(S\) is not eventually periodic.
 \end{abstract}
 
 \section{Introduction and the main theorem}
@@ -44,8 +44,6 @@ whose greedy pair-sum-avoiding extension has a consecutive-gap sequence that is 
 \noindent\textit{AI-use disclosure.} This proof was developed with assistance from OpenAI's GPT-5.6 Sol. All arguments were checked and verified by the author.
 
 \noindent\textit{Formal verification.} Theorem~\ref{thm:main} has been formally verified in Lean~4. The formalization is available at \href{https://doi.org/10.5281/zenodo.21902147}{https://doi.org/10.5281/zenodo.21902147}.
-
-The question appears in Erd\H{o}s and Graham~\cite[p.~53]{ErdosGraham1980} and is catalogued as Erd\H{o}s Problem~341 in Bloom's online database~\cite{Bloom341}. Related periodicity criteria are due to Calkin and Finch~\cite{CalkinFinch1996}, while Calkin and Erd\H{o}s~\cite{CalkinErdos1996} proved that a natural class of aperiodic sum-free sets is incomplete. We answer the arbitrary finite-seed question negatively.
 
 Write \(\N=\{1,2,3,\ldots\}\) and \(\Nzero=\{0,1,2,\ldots\}\). For \(X,Y\subseteq\Nzero\) and \(c\in\Nzero\), put
 \[
@@ -57,14 +55,14 @@ c+X=\{c+x\mid x\in X\},
 \]
 Equal summands are allowed in every sumset.
 
-Let \(A=\{a_1<\cdots<a_k\}\subseteq\N\) be a nonempty finite set. Install all elements of \(A\) as the initial terms. For \(n\geq k\), define
+Let \(A=\{a_1<\cdots<a_k\}\subseteq\N\) be a nonempty finite set. For \(n\geq k\), define
 \begin{equation}\label{eq:greedy-definition}
 a_{n+1}
 =\min\{t\in\N\mid t>a_n,\ t\notin A_n+A_n\},
 \qquad
 A_n=\{a_1,\ldots,a_n\}.
 \end{equation}
-Let \(d_m=a_{m+1}-a_m\) denote the consecutive gaps.
+Let \(d_m=a_{m+1}-a_m\) denote the consecutive gaps. Erd\H{o}s and Graham asked whether, for every finite initial set \(A\), the resulting gap sequence \((d_m)_{m\ge 1}\) is eventually periodic. The question appears in Erd\H{o}s and Graham~\cite[p.~53]{ErdosGraham1980} and is catalogued as Erd\H{o}s Problem~341 in Bloom's online database~\cite{Bloom341}. Related periodicity criteria are due to Calkin and Finch~\cite{CalkinFinch1996}, while Calkin and Erd\H{o}s~\cite{CalkinErdos1996} proved that a natural class of aperiodic sum-free sets is incomplete. We answer the arbitrary finite-seed question negatively.
 
 \begin{theorem}\label{thm:main}
 Let
