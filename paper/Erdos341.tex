@@ -15,15 +15,16 @@
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Nzero}{\mathbb{N}_0}
 \newcommand{\Zfortynine}{\mathbb{Z}/49\mathbb{Z}}
+\newcommand{\ZM}{\mathbb{Z}/M\mathbb{Z}}
 \newcommand{\cpl}[1]{#1^{\mathsf{c}}}
 \newcommand{\ints}[2]{[#1,#2]_{\mathbb{Z}}}
 
-\title{A Counterexample to Erd\H{o}s Problem~341}
+\title{Counterexamples to Erd\H{o}s Problem~341}
 \author{Zhiheng Li}
 \date{}
 
 \hypersetup{
-  pdftitle={A Fixed Aperiodic Greedy Pair-Sum-Avoiding Sequence},
+  pdftitle={Counterexamples to Erdős Problem 341},
   pdfauthor={Zhiheng Li}
 }
 
@@ -32,18 +33,16 @@
 \maketitle
 
 \begin{abstract}
-We give a negative answer to Erd\H{o}s problem~341 by exhibiting the following counterexample
+Erd\H{o}s problem~341 asks whether the consecutive gap sequence of the pair-sum-avoiding greedy extension of every finite seed set is eventually periodic. We give a negative answer by exhibiting the following counterexample
 \[
 A=\{1,2,3,5,7,13,22,27,28,32,36,40,47,48,52,63,71,77,81,89,97\}.
 \]
-The proof constructs an infinite set \(S\) satisfying the exact greedy recurrence \(t\in S\Longleftrightarrow t\notin S+S\) for \(t>97\). We show that \(S\) is the extension of the \(21\)-element seed set \(A\), and use a scale-eight sumset controller embedded in three residue classes modulo \(49\) and a finite modular shield to prove that the consecutive gap sequence of \(S\) is not eventually periodic.
+The proof constructs an infinite set \(S\) satisfying the exact greedy recurrence \(t\in S\Longleftrightarrow t\notin S+S\) for \(t>97\). We show that \(S\) is the greedy extension of the \(21\)-element seed set \(A\), and use a scale-eight sumset controller embedded in three residue classes modulo \(49\) and a finite modular shield to prove that the consecutive gap sequence of \(S\) is not eventually periodic. Motivated by this counterexample, we further obtain an infinite family of counterexamples by a slight modification of the construction.
 \end{abstract}
 
 \section{Introduction and the main theorem}
 
 \noindent\textit{AI-use disclosure.} This proof was developed with assistance from OpenAI's GPT-5.6 Sol. All arguments were checked and verified by the author.
-
-\noindent\textit{Formal verification.} Theorem~\ref{thm:main} has been formally verified in Lean~4. The formalization is available at \href{https://doi.org/10.5281/zenodo.21902147}{https://doi.org/10.5281/zenodo.21902147}.
 
 Write \(\N=\{1,2,3,\ldots\}\) and \(\Nzero=\{0,1,2,\ldots\}\). For \(X,Y\subseteq\Nzero\) and \(c\in\Nzero\), put
 \[
@@ -53,7 +52,7 @@ c+X=\{c+x\mid x\in X\},
 \qquad
 \cpl{X}=\Nzero\setminus X.
 \]
-Equal summands are allowed in every sumset.
+Equal summands are allowed in every sumset. For integers \(a\leq b\), write \(\ints{a}{b}=\{a,a+1,\ldots,b\}\). 
 
 Let \(A=\{a_1<\cdots<a_k\}\subseteq\N\) be a nonempty finite set. For \(n\geq k\), define
 \begin{equation}\label{eq:greedy-definition}
@@ -67,12 +66,12 @@ Let \(d_m=a_{m+1}-a_m\) denote the consecutive gaps. Erd\H{o}s and Graham asked 
 \begin{theorem}\label{thm:main}
 Let
 \[
-A=\{1,2,3,5,7,13,22,27,28,32,36,40,47,48,52,63,71,77,81,89,97\},
+A=\{1,2,3,5,7,13,22,27,28,32,36,40,47,48,52,63,71,77,81,89,97\}.
 \]
 For the sequence generated from \(A\) by~\eqref{eq:greedy-definition},
 \[
-\forall M\geq1\ \forall p\geq1\ \exists m\geq M
-\quad d_{m+p}\neq d_m.
+\forall K\geq1\ \forall h\geq1\ \exists m\geq K
+\quad d_{m+h}\neq d_m.
 \]
 Thus its consecutive gap sequence is not eventually periodic.
 \end{theorem}
@@ -99,8 +98,8 @@ Thus~\eqref{eq:exact-recurrence} makes the rule select exactly the elements of \
 
 \section{A scale-eight sumset controller}
 
-For integers \(a\leq b\), write \(\ints{a}{b}=\{a,a+1,\ldots,b\}\). We use the standard identity
-\begin{equation}\label{eq:interval-sum}
+We use the standard identity
+\begin{equation}
 \ints{a}{b}+\ints{c}{d}=\ints{a+c}{b+d}
 \qquad (a\leq b,\ c\leq d).
 \end{equation}
@@ -123,7 +122,7 @@ At each scale, the corresponding blocks of \(L\) and \(Y_0\setminus\{0\}\) parti
 Y_0=\cpl{L}.
 \end{equation}
 
-\begin{lemma}[Controller identities]\label{lem:controller}
+\begin{lemma}[Controller identities]
 The sets in~\eqref{eq:Y0}--\eqref{eq:Y2} satisfy
 \begin{align}
 Y_1&=\cpl{(Y_0+Y_0)},                                      \label{eq:gate01}\\
@@ -167,7 +166,7 @@ Choose \(a=8^k>\max\{N,h\}\) and put \(m=4a-h\). Then \(N<a\leq m\leq4a-1\). Hen
 \section{A finite shield modulo 49}
 
 All residues in this section lie in \(\Zfortynine\) and are represented in \(\{0,\ldots,48\}\). Put
-\begin{equation}\label{eq:PBD}
+\begin{equation}
 P=\{7,14,28\},\qquad B=\{3,22,32,40,48\},\qquad
 D=\{1,2,5,13,27,36,47\},\qquad Q=P\cup B.
 \end{equation}
@@ -195,7 +194,7 @@ All assertions follow by direct computation in \(\Zfortynine\).
 \end{proof}
 
 We now define the infinite set
-\begin{equation}\label{eq:S}
+\begin{equation}
 \begin{split}
 S={}&D\cup\{49q+b\mid q\in\Nzero,\ b\in B\}\\
 &\cup\{49q+7\mid q\in Y_0\}
@@ -264,20 +263,20 @@ Let \(T=\{t_1<t_2<\cdots\}\subseteq\N\) be infinite. If the consecutive gaps \(t
 \end{lemma}
 
 \begin{proof}
-Suppose that the gaps have period \(p\geq1\) from index \(M\) onward. Let
+Suppose that the gaps have period \(h\geq1\) from index \(K\) onward. Let
 \[
-h=\sum_{j=0}^{p-1}(t_{M+j+1}-t_{M+j})>0.
+H=\sum_{j=0}^{h-1}(t_{K+j+1}-t_{K+j})>0.
 \]
-Every block of \(p\) consecutive gaps in the periodic tail has sum $h$, so \(t_{m+p}=t_m+h\) for \(m\geq M\). Since \(T\) is infinite, it is unbounded. Thus, given \(n\geq t_M\), there is a unique \(m\geq M\) such that \(t_m\leq n<t_{m+1}\), and
+Every block of \(h\) consecutive gaps in the periodic tail has sum $H$, so \(t_{m+h}=t_m+H\) for \(m\geq K\). Since \(T\) is infinite, it is unbounded. Thus, given \(n\geq t_K\), there is a unique \(m\geq K\) such that \(t_m\leq n<t_{m+1}\), and
 \[
-t_{m+p}\leq n+h<t_{m+p+1},
+t_{m+h}\leq n+H<t_{m+h+1},
 \qquad
-(n+h)-t_{m+p}=n-t_m.
+(n+H)-t_{m+h}=n-t_m.
 \]
-Thus \(n=t_m\) if and only if \(n+h=t_{m+p}\), which proves
+Thus \(n=t_m\) if and only if \(n+H=t_{m+h}\), which proves
 \[
-n\in T\iff n+h\in T
-\qquad(n\geq t_M),
+n\in T\iff n+H\in T
+\qquad(n\geq t_K).
 \]
 This is ultimate periodicity of the membership indicator.
 \end{proof}
@@ -296,6 +295,156 @@ q\in Y_0
 \iff q+h\in Y_0,
 \]
 contradicting Lemma~\ref{lem:Y0-aperiodic}. Thus the membership indicator of \(S\) is not ultimately periodic. The contrapositive of Lemma~\ref{lem:gaps-imply-membership} now shows that the consecutive gaps in the increasing enumeration of \(S\) are not eventually periodic, which is the assertion of the theorem.
+\end{proof}
+
+\section{An infinite family of counterexamples}
+
+We further give an infinite family of counterexamples by replacing the finite shield above with a parameterized family of finite shields.
+
+Fix an integer \(p\geq18\), put \(M=7p\), and work in \(\ZM\), represented by \(\{0,\ldots,M-1\}\). Define
+\begin{equation}\label{eq:parametric-PBQFD}
+\begin{gathered}
+P_p=\{p,2p,4p\},
+\qquad
+B_p=\{M-3,M-1,6p+3\},
+\qquad Q_p=P_p\cup B_p,\\
+F_p=Q_p\cup(Q_p-B_p)\cup(Q_p-P_p),
+\qquad
+D_p=\ZM\setminus F_p,
+\end{gathered}
+\end{equation}
+where \(Q_p-B_p=\{q-b:q\in Q_p,\ b\in B_p\}\), and similarly for \(Q_p-P_p\). Set
+\begin{equation}\label{eq:pseed-family}
+A_p=D_p\cup B_p\cup(M+B_p)\cup\{p,4p,M+2p,M+4p\}.
+\end{equation}
+
+\begin{theorem}\label{thm:pmain}
+For every integer \(p\geq18\), the seed \(A_p\) in~\eqref{eq:pseed-family} has \(7p-20\) elements. For the sequence generated from \(A_p\) by~\eqref{eq:greedy-definition},
+\[
+\forall K\geq1\ \forall h\geq1\ \exists m\geq K
+\quad d_{m+h}\neq d_m.
+\]
+Thus its consecutive-gap sequence is not eventually periodic. In particular, the sets \(A_p\), \(p\geq18\), form an infinite family of counterexamples.
+\end{theorem}
+
+All residues in this section lie in \(\ZM\), with the notation of~\eqref{eq:parametric-PBQFD}.
+
+\begin{lemma}[Uniform finite shield]\label{lem:pshield}
+In $\ZM$, for every \(p\geq18\),
+\begin{align}
+D_p+B_p&=\ZM\setminus Q_p,                                      \label{eq:pcover-mod}\\
+Q_p\cap\bigl((B_p+B_p)\cup(P_p+B_p)\cup(D_p+B_p)\cup(D_p+P_p)\bigr)
+&=\varnothing,                                             \label{eq:pavoid-mod}\\
+(P_p+P_p)\cap Q_p&=P_p.                                            \label{eq:pPP-mod}
+\end{align}
+Moreover, the only ordered pairs in \(P_p\times P_p\) whose sum lies in \(Q_p\) are
+\begin{equation}\label{eq:pdiagonal-pairs}
+p+p=2p,
+\qquad
+2p+2p=4p,
+\qquad
+4p+4p=M+p.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Expanding the definition in~\eqref{eq:parametric-PBQFD} gives
+\begin{equation}\label{eq:pF-explicit}
+\begin{split}
+F_p=\{&0,2,\ p-6,p-4,p,p+1,p+3,\ 2p-3,2p,2p+1,2p+3,\\
+&3p-3,3p-1,3p,\ 4p,4p+1,4p+3,\\
+&5p-3,5p-1,5p,5p+3,\\
+&6p-3,6p-1,6p,6p+3,6p+4,6p+6,\ M-3,M-2,M-1\}.
+\end{split}
+\end{equation}
+For \(p\geq18\), these are \(30\) distinct representatives in \(\{0,\ldots,M-1\}\). In particular, \(|D_p|=M-30\). The definition of \(F_p\) immediately gives
+\begin{equation}\label{eq:pdirect-avoidance}
+(D_p+B_p)\cap Q_p=\varnothing,
+\qquad
+(D_p+P_p)\cap Q_p=\varnothing.
+\end{equation}
+
+We prove the reverse inclusion in~\eqref{eq:pcover-mod}. Let \(r\in\ZM\), and put \(f=r+1\). If \(f\notin F_p\), then \(f\in D_p\) and
+\[
+r=f+(M-1)\in D_p+B_p.
+\]
+It remains to consider \(f\in F_p\). Put
+\[
+G_p=\{0,p+1,2p+1,4p+1,6p+4,M-2\},
+\qquad
+E_p=\{p-6,3p-3,5p-3,6p-3,M-3\}.
+\]
+If \(f\in G_p\), then direct subtraction shows that \(r=f-1\in Q_p\). If \(f\in F_p\setminus(G_p\cup E_p)\), comparison with~\eqref{eq:pF-explicit} shows that \(f+2\notin F_p\), and hence
+\[
+r=(f+2)+(M-3)\in D_p+B_p.
+\]
+For the five values of \(f\) in \(E_p\), the corresponding representations are
+\begin{align*}
+p-7&=(2p-10)+(6p+3),&
+3p-4&=(4p-7)+(6p+3),\\
+5p-4&=(6p-7)+(6p+3),&
+6p-4&=(M-7)+(6p+3),\\
+M-4&=(p-7)+(6p+3).
+\end{align*}
+Thus every residue outside \(Q_p\) belongs to \(D_p+B_p\), and~\eqref{eq:pdirect-avoidance} proves~\eqref{eq:pcover-mod}.
+
+Direct calculation shows that \(B_p+B_p\) and \(P_p+B_p\) are disjoint from \(Q_p\). Together with~\eqref{eq:pdirect-avoidance}, this proves~\eqref{eq:pavoid-mod}. Finally, the three mixed sums of elements of \(P_p\) are \(3p,5p,6p\), all outside \(Q_p\), while the diagonal sums are those in~\eqref{eq:pdiagonal-pairs}. This proves~\eqref{eq:pPP-mod} and the ordered-pair assertion.
+\end{proof}
+
+We now define the infinite set
+\begin{equation}
+\begin{split}
+S_p={}&D_p\cup\{Mq+b\mid q\in\Nzero,\ b\in B_p\}\\
+&\cup\{Mq+p\mid q\in Y_0\}
+ \cup\{Mq+2p\mid q\in Y_1\}
+ \cup\{Mq+4p\mid q\in Y_2\}.
+\end{split}
+\end{equation}
+The initial controller memberships give
+\begin{equation}\label{eq:pseed-prefix}
+S_p\cap\ints{1}{2M-1}
+=D_p\cup B_p\cup(M+B_p)\cup\{p,4p,M+2p,M+4p\}=A_p.
+\end{equation}
+In particular, \(2M-1=M+(M-1)\in A_p\). The four sets in~\eqref{eq:pseed-prefix} are disjoint, and therefore
+\begin{equation}\label{eq:pseed-size}
+|A_p|=(M-30)+3+3+4=M-20=7p-20.
+\end{equation}
+
+\begin{theorem}\label{thm:precurrence}
+For every \(p\geq18\) and every \(t>2M-1\),
+\begin{equation}
+t\in S_p
+\quad\Longleftrightarrow\quad
+t\notin S_p+S_p.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Write \(t=Mq+r\), with \(0\leq r<M\). Since \(t>2M-1\), we have \(q\geq2\). The argument is the same as in the proof of Theorem~\ref{thm:recurrence}, with \(M,Q_p,P_p,B_p,D_p,S_p\) replacing \(49,Q,P,B,D,S\) respectively, and Lemma~\ref{lem:pshield} replacing Lemma~\ref{lem:shield}. 
+
+The only change occurs when \(r\notin Q_p\). Such \(t\) is not in \(S_p\). By~\eqref{eq:pcover-mod}, there exist \(d\in D_p\) and \(b\in B_p\) such that
+\[
+d+b=Mc+r
+\qquad(c\in\{0,1\}).
+\]
+Since \(q\geq2\), we have \(q-c\geq1\), and
+\[
+t=d+\bigl(M(q-c)+b\bigr)\in S_p+S_p.
+\]
+This completes the proof.
+\end{proof}
+
+By~\eqref{eq:pseed-prefix}, Theorem~\ref{thm:precurrence}, and Lemma~\ref{lem:greedy}, the increasing enumeration of \(S_p\) is exactly the greedy extension of \(A_p\).
+
+\begin{proof}[Proof of Theorem~\ref{thm:pmain}]
+Equation~\eqref{eq:pseed-size} proves the asserted cardinality. The proof of nonperiodicity is the same as in Theorem~\ref{thm:main}. Indeed, suppose, for contradiction, that membership in \(S_p\) were ultimately periodic with period \(h\geq1\). Then for all sufficiently large \(q\),
+\[
+q\in Y_0
+\iff Mq+p\in S_p
+\iff M(q+h)+p\in S_p
+\iff q+h\in Y_0,
+\]
+contradicting Lemma~\ref{lem:Y0-aperiodic}. Lemma~\ref{lem:gaps-imply-membership} therefore shows that the consecutive gaps in the greedy extension of \(A_p\) are not eventually periodic.
 \end{proof}
 
 \begin{thebibliography}{9}
